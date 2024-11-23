@@ -1,3 +1,5 @@
+
+
 import datetime
 
 """Atributos de un experimento: nombre, fecha(DD/MM/AAAA), tipo y resultados numericos"""
