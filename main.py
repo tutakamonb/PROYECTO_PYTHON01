@@ -1,10 +1,7 @@
 from datetime import datetime
 import statistics
 
-
 class Experimentos:
-
-
 
 #función de inicializacion
     def __init__(self, nombre, fechaRealizacion, tipoExperimento, resultados):
@@ -13,8 +10,6 @@ class Experimentos:
         self.tipoExperimento = tipoExperimento
         self.resultados = resultados
  
-
-
 #función para agregar un experimento
 def agregarExperimento(listaExperimentos):
     nombre = input("Ingrese el nombre del experimento")
@@ -92,8 +87,7 @@ def menu():
         print("4. GENERAR INFORME")
         print("5. SALIR")
 
-
-        opcion = input("SELECIONE UNA OPCIÓN: ")
+        opcion = input("\nSELECIONE UNA OPCIÓN: ")
     
         if opcion == "1":
             agregarExperimento(listaExperimentos)
@@ -108,7 +102,6 @@ def menu():
             break
         else:
             print("OPCION INVALIDA")
-
 
 menu()          
 

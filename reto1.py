@@ -1,3 +1,6 @@
+# proyecto  RETO 1 - Proyecto de Investigación Científica en Python
+# @author: MANUEL AURELIO BARRERA BOTIA Y MILLER ERNESTO RODRIGUEZ TINJACA
+
 from datetime import datetime
 import statistics
 
@@ -82,13 +85,16 @@ def menu():
 
     listaExperimentos = [] 
     while True:
-        print("\nMENU DE OPCIONES")
-        print("1. AGREGAR EXPERIMENTO")
-        print("2. VISUALIZAR EXPERIMENTO")
-        print("3. ANALISIS DE RESULTADOS")
-        print("4. GENERAR INFORME")
-        print("5. SALIR")
-
+        print("\n****************************")
+        print("***** MENU DE OPCIONES *****")
+        print("****************************")
+        print("1. AGREGAR EXPERIMENTO    **")
+        print("2. VISUALIZAR EXPERIMENTO **")
+        print("3. ANALISIS DE RESULTADOS **")
+        print("4. GENERAR INFORME        **")
+        print("5. SALIR                  **")
+        print("****************************")
+        print("****************************")
 
         opcion = input("SELECIONE UNA OPCIÓN: ")
     
@@ -101,7 +107,7 @@ def menu():
         elif opcion == "4":
             generarInforme(listaExperimentos)
         elif opcion == "5":
-            print("SALIENDO DEL PROGRAMA")
+            print("GRACIAS POR HABER UTILIZADO NUESTRO SISTEMA")
             break
         else:
             print("OPCION INVALIDA")
