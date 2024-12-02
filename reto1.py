@@ -10,7 +10,7 @@ import statistics
 #Lista para almacenar los experimentos
 listaDeExperimentos = [
     ["Experimento 1","26/11/2024","Física", [5,6,2,7,8,9]],
-    ["Experimento 2","27/11/2024","Quimica", [2,4,6,8,10,12]]
+    ["Experimento 2","27/11/2024","Quimica", [2,4,6,8,10,12]],
     ["Experimento 3","01/12/2024","Quimica", [25,42,65,83,101,120]]
 ]
 
@@ -81,10 +81,7 @@ def calcular_estadisticas():
 #Funcion de comprar experimentos
 def comparar_experimentos():
     visulizar_experimentos()
-    tablaCompararExperimento = PrettyTable()
-    tablaCompararExperimento.field_names = ["\033[1;33;40m"+"id", "Resultado", "Promedio"+'\033[0;m']
 
-    
     try: 
         indices = list(map(int, input("Ingrese los indices de los experimentos a comprar separados por comas: ").split(",")))
         comprarciones = []
@@ -96,9 +93,9 @@ def comparar_experimentos():
             else:
                 print("\033[1;33m"+"Error: Numero invalido"+'\033[0;m')
         comprarciones.sort(key=lambda x: x[1], reverse=True)
-        for nombre, promedio in comprarciones:   
-            tablaCompararExperimento.add_row([nombre, promedio])
-            print(tablaCompararExperimento)
+        for nombre, promedio in comprarciones:
+            print(f"Experimento: {nombre}, Promedio: {promedio}")
+            
     except:
         print("\033[1;33m"+"Error: Entrada no valida. intenta de nuevo"+'\033[0;m')
     
