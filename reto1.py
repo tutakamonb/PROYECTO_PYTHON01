@@ -11,6 +11,7 @@ import statistics
 listaDeExperimentos = [
     ["Experimento 1","26/11/2024","Física", [5,6,2,7,8,9]],
     ["Experimento 2","27/11/2024","Quimica", [2,4,6,8,10,12]]
+    ["Experimento 3","01/12/2024","Quimica", [25,42,65,83,101,120]]
 ]
 
 #Funcion para agregar un nuevo experimento
@@ -124,6 +125,8 @@ def generar_informe():
             archivo.write(f"Minimo: {minimo}\n")
             archivo.write("=================\n")
         print("\033[1;32m"+"Informe generado con exito"+'\033[0;m')
+
+
 
 #Funcion para mostrar el menu
 def mostar_menu():
