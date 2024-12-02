@@ -2,115 +2,168 @@
 # @author: MANUEL AURELIO BARRERA BOTIA Y MILLER ERNESTO RODRIGUEZ TINJACA
 
 from datetime import datetime
+from colorama import init, Fore, Back, Style
+from colorama import Cursor, init, Fore
+from prettytable import PrettyTable 
 import statistics
 
-class Experimentos:
+#Lista para almacenar los experimentos
+listaDeExperimentos = [
+    ["Experimento 1","26/11/2024","Física", [5,6,2,7,8,9]],
+    ["Experimento 2","27/11/2024","Quimica", [2,4,6,8,10,12]]
+]
 
-
-#función de inicializacion
-    def __init__(self, nombre, fechaRealizacion, tipoExperimento, resultados):
-        self.nombre = nombre
-        self.fechaRealizacion = fechaRealizacion
-        self.tipoExperimento = tipoExperimento
-        self.resultados = resultados
- 
-
-#función para agregar un experimento
-def agregarExperimento(listaExperimentos):
-    nombre = input("Ingrese el nombre del experimento")
-    fechaRealizacion_str = input("Ingrese la fecha de realización del experimento (DD/MM/YYYY)")
-    try: 
-        fechaRealizacion = datetime.strptime(fechaRealizacion_str, "%d/%m/%Y")
-    except ValueError:
-        print("fecha no valida.")
-        return
-    tipoExperimento = input("Ingrese el Tipo de experimento: ")
-    resultados_str = input("ingrese los valores, separados por comas: ")
-    try: 
-        resultados = list(map(float, resultados_str.split(",")))
-    except ValueError:
-        print("Resultado no valido.")
-        return
-
-#crear un objeto
-    experimento = Experimentos(nombre, fechaRealizacion, tipoExperimento, resultados)
-    listaExperimentos.append(experimento)
-    print("Experimento agregado con exito..")
-
-def VisualizarExperimentos(listaExperimentos):
-    if not listaExperimentos:
-        print("No hay Experimentos registrados")
-        return
+#Funcion para agregar un nuevo experimento
+def agregar_experimento():
     
-    for i, experimento in enumerate(listaExperimentos, start=1):
-        print(f"\nExperimento {i}")
-        print(f"Nombre: {experimento.nombre}")
-        print(f"Fecha de realización: {experimento.fechaRealizacion.strftime('%d/%m/%Y')}")
-        print(f"Tipo de Experimento: {experimento.tipoExperimento}")
-        print(f"Resultados del Experimento: {experimento.resultados}")
-
-def analizarResultados(listaExperimentos):
-    if not listaExperimentos:
-        print("No hay Experimentos registrados")
-        return
-     
-    for experimento in listaExperimentos:
-        promedio = statistics.mean(experimento.resultados)
-        maximo = max(experimento.resultados)
-        minimo = min(experimento.resultados)
-        print(f"\nAnalisis del Experimento {experimento.nombre} ")
-        print(f"\nAnalisis del Experimento {experimento.nombre} ")
-        print(f"Promedio de resultados {promedio} ")
-        print(f"Valor máximo {maximo} ")
-        print(f"Valor mínimo {minimo} ")
-
-
-def generarInforme(listaExperimentos):
-    if not listaExperimentos:
-        print("No hay Experimentos registrados")
-        return
+    nombre = input("Ingrese el nombre del experimento: ")
+    fecha = input("Ingrese la fecha del experimento: DD/MM/YYYY ")
+    tipo = input("Ingrese el tipo de expeimento (Quimica, Biologia, Fisica): ")
     
-    #abrir archivo txt para escribir informe
-    with open("informe_experimentos.txt", "w") as archivo:
-        #escribir los detalles del experimento en el archivo
-        for experimento in listaExperimentos:
-            archivo.write(f"Nombre : {experimento.nombre}\n")
-            archivo.write(f"Fecha de realización: {experimento.fechaRealizacion.strftime('%d/%m/%Y')}\n")
-            archivo.write(f"Tipo de Experimento: {experimento.tipoExperimento}\n")
-            archivo.write(f"Resultados del Experimento: {experimento.resultados}\n")
-            archivo.write("\n")
-    print("Informe generado como 'informe_experimentos.txt'") 
+    try:
+        datetime.datetime.strptime(fecha, "%d/%m/%Y") #Validar la fecha
+        resultados = list(map(int, input("Ingrese los resultados numericos separados por comeas: ").split(",")))
+        listaDeExperimentos.append([nombre,fecha,tipo,resultados])
+        print("\033[1;32m"+"Experimentos agregados con exito"+'\033[0;m')
+    except:
+        print("\033[1;33m"+"Error: Entrada no valida. intenta de nuevo"+'\033[0;m')
 
-def menu():
-
-    listaExperimentos = [] 
-    while True:
-        print("\n****************************")
-        print("***** MENU DE OPCIONES *****")
-        print("****************************")
-        print("1. AGREGAR EXPERIMENTO    **")
-        print("2. VISUALIZAR EXPERIMENTO **")
-        print("3. ANALISIS DE RESULTADOS **")
-        print("4. GENERAR INFORME        **")
-        print("5. SALIR                  **")
-        print("****************************")
-        print("****************************")
-
-        opcion = input("SELECIONE UNA OPCIÓN: ")
+#Funcion para eliminar un experimento
+def eliminar_experimento():
+    visulizar_experimentos()
     
-        if opcion == "1":
-            agregarExperimento(listaExperimentos)
-        elif opcion == "2":
-            VisualizarExperimentos(listaExperimentos)
-        elif opcion == "3":
-            analizarResultados(listaExperimentos)
-        elif opcion == "4":
-            generarInforme(listaExperimentos)
-        elif opcion == "5":
-            print("GRACIAS POR HABER UTILIZADO NUESTRO SISTEMA")
-            break
+    try:
+        indice = int(input("Ingrese el indice del experimento a eliminar: ")) - 1
+        if 0 <= indice < len(listaDeExperimentos):
+            listaDeExperimentos.pop(indice)
+            print("\033[1;32m"+"Experimentos Eliminado con exito"+'\033[0;m')
         else:
-            print("OPCION INVALIDA")
+            print("\033[1;33m"+"Error: Numero invalido"+'\033[0;m')
+    except:
+        print("\033[1;33m"+"Error: Entrada no valida. intenta de nuevo"+'\033[0;m')
+
+#Funcion para visualizar mis experimentos
+def visulizar_experimentos():
+    
+    tablaExperimentos = PrettyTable()
+    
+    tablaExperimentos.field_names = ["\033[1;33;40m"+"id", "Nombre", "Fecha", "Tipo","Resultados"+'\033[0;m']
+    for i, experimento in enumerate(listaDeExperimentos, start=1):
+        tablaExperimentos.add_row([i, experimento[0], experimento[1], experimento[2],experimento[3]], divider=True)
+        
+    print(tablaExperimentos)
+    
+   
+#Funcion para calular estadisticas
+def calcular_estadisticas():
+    visulizar_experimentos()
+
+    tablaEstadistica = PrettyTable()
+    tablaEstadistica.field_names = ["\033[1;33;40m"+"id", "Promedio", "Maximo", "Minimo"+'\033[0;m']
+
+    try:
+        indice = int(input("Ingrese el indice del experimento a calcular estadisticas: ")) - 1
+        if 0 <= indice < len(listaDeExperimentos):
+            resultados = listaDeExperimentos[indice][3]
+            promedio = sum(resultados) / len(resultados)
+            maximo = max(resultados)
+            minimo = min(resultados)
+            print(f"\033[1;32m Estadisticas del experimento: {listaDeExperimentos[indice][0]}"+'\033[0;m')
+            tablaEstadistica.add_row([indice + 1, promedio, maximo, minimo])
+            print(tablaEstadistica)
+        else:
+            print("\033[1;33m"+"Error: Numero invalido"+'\033[0;m')
+    except:
+        print("\033[1;33m"+"Error: Entrada no valida. intenta de nuevo"+'\033[0;m')
 
 
-menu()          
+#Funcion de comprar experimentos
+def comparar_experimentos():
+    visulizar_experimentos()
+    tablaCompararExperimento = PrettyTable()
+    tablaCompararExperimento.field_names = ["\033[1;33;40m"+"id", "Resultado", "Promedio"+'\033[0;m']
+
+    
+    try: 
+        indices = list(map(int, input("Ingrese los indices de los experimentos a comprar separados por comas: ").split(",")))
+        comprarciones = []
+        for indice in indices:
+            if 1 <= indice <= len(listaDeExperimentos):
+                resultados = listaDeExperimentos[indice-1][3]
+                promedio = sum(resultados) / len(resultados)
+                comprarciones.append((listaDeExperimentos[indice-1][0],promedio))
+            else:
+                print("\033[1;33m"+"Error: Numero invalido"+'\033[0;m')
+        comprarciones.sort(key=lambda x: x[1], reverse=True)
+        for nombre, promedio in comprarciones:   
+            tablaCompararExperimento.add_row([nombre, promedio])
+            print(tablaCompararExperimento)
+    except:
+        print("\033[1;33m"+"Error: Entrada no valida. intenta de nuevo"+'\033[0;m')
+    
+
+#Funcion para generar informe
+def generar_informe():
+    if not listaDeExperimentos:
+        print("\033[1;33m"+"No existen experimentos registrados"+'\033[0;m')
+        return
+    with open("informe.txt", "w") as archivo:
+        archivo.write("==== Informe ====\n")
+        archivo.write("=================\n")
+        for experimento in listaDeExperimentos:
+            resultados = experimento[3]
+            promedio = sum(resultados) / len(resultados)
+            maximo = max(resultados)
+            minimo = min(resultados)
+            archivo.write(f"Nombre: {experimento[0]} \n")
+            archivo.write(f"Fecha: {experimento[1]}\n")
+            archivo.write(f"Tipo: {experimento[2]}\n")
+            archivo.write(f"Resultados: {experimento[3]}\n")
+            archivo.write(f"Promedio: {promedio}\n")
+            archivo.write(f"Maximo: {maximo}\n")
+            archivo.write(f"Minimo: {minimo}\n")
+            archivo.write("=================\n")
+        print("\033[1;32m"+"Informe generado con exito"+'\033[0;m')
+
+#Funcion para mostrar el menu
+def mostar_menu():
+    
+    tablaMenu = PrettyTable()
+    tablaMenu.align = "l"
+    tablaMenu.field_names = ["\033[1;37;40m"+"Menu Principal"+'\033[0;m']
+    tablaMenu.add_row(["\033[3;31;36m"+"1. Agregar experimento"+'\033[0;m'])
+    tablaMenu.add_row(["\033[3;31;36m"+"2. Visualizar experimentos"+'\033[0;m'])
+    tablaMenu.add_row(["\033[3;31;36m"+"3. Eliminar experimentos"+'\033[0;m'])
+    tablaMenu.add_row(["\033[3;31;36m"+"4. Calcular estadisticas"+'\033[0;m'])   
+    tablaMenu.add_row(["\033[3;31;36m"+"5. Comparar experimentos"+'\033[0;m'])
+    tablaMenu.add_row(["\033[3;31;36m"+"6. Generar informe"+'\033[0;m'])
+    tablaMenu.add_row(["\033[3;31;36m"+"7. Salir"+'\033[0;m'])
+        
+    print(tablaMenu)
+
+#Funcion principal
+def main():
+    while True:
+
+        mostar_menu()
+        try:
+            opcion = int(input("\033[3;35;47m"+"Ingrese una opcion: "+'\033[0;m'))
+            if opcion == 1:
+                agregar_experimento()
+            elif opcion == 2:
+                visulizar_experimentos()
+            elif opcion == 3:
+                eliminar_experimento()
+            elif opcion == 4:
+                calcular_estadisticas()
+            elif opcion == 5:
+                 comparar_experimentos()
+            elif opcion == 6:
+                generar_informe()
+            elif opcion == 7:
+                print("\033[3;33;46m"+"Gracias por usar el programa ¡Vuelva pronto!" +'\033[0;m')
+                break
+        except: 
+            print("\033[3;33m"+"Error: Entrada no valida. intenta de nuevo"+'\033[0;m')
+
+main()      

@@ -1,0 +1,18 @@
+==== Informe ====
+=================
+Nombre: Experimento 1 
+Fecha: 26/11/2024
+Tipo: Física
+Resultados: [5, 6, 2, 7, 8, 9]
+Promedio: 6.166666666666667
+Maximo: 9
+Minimo: 2
+=================
+Nombre: Experimento 1 
+Fecha: 26/11/2024
+Tipo: Física
+Resultados: [5, 6, 2, 7, 8, 9]
+Promedio: 6.166666666666667
+Maximo: 9
+Minimo: 2
+=================
