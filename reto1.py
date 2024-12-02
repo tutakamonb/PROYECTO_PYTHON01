@@ -10,7 +10,8 @@ import statistics
 #Lista para almacenar los experimentos
 listaDeExperimentos = [
     ["Experimento 1","26/11/2024","Física", [5,6,2,7,8,9]],
-    ["Experimento 2","27/11/2024","Quimica", [2,4,6,8,10,12]]
+    ["Experimento 2","27/11/2024","Física", [2,4,6,8,10,12]]
+    ["Experimento 3","01/12/2024","Física", [2,4,6,8,10,12]]
 ]
 
 #Funcion para agregar un nuevo experimento
@@ -77,9 +78,11 @@ def calcular_estadisticas():
         print("\033[1;33m"+"Error: Entrada no valida. intenta de nuevo"+'\033[0;m')
 
 
+
 #Funcion de comprar experimentos
 def comparar_experimentos():
     visulizar_experimentos()
+
     tablaCompararExperimento = PrettyTable()
     tablaCompararExperimento.field_names = ["\033[1;33;40m"+"id", "Resultado", "Promedio"+'\033[0;m']
 
